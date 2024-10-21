@@ -232,6 +232,12 @@ github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8
 github.com/subosito/gotenv v1.6.0 h1:9NlTDc1FTs4qu0DDq7AEtTPNw6SVm7uBMsUCUjABIf8=
 github.com/subosito/gotenv v1.6.0/go.mod h1:Dk4QP5c2W3ibzajGcXpNraDfq2IrhjMIvMSWPKKo0FU=
 github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07/go.mod h1:kDXzergiv9cbyO7IOYJZWg1U88JhDg3PB6klq9Hg2pA=
+github.com/thedevminertv/minimsg v0.0.0-20241021150104-e59fcc4be386 h1:I/YbW5oKgO3U+msKWMTZsyJbAwiJ18WoMG/J0xG8Gyk=
+github.com/thedevminertv/minimsg v0.0.0-20241021150104-e59fcc4be386/go.mod h1:CzLnF/HMdYpU/H20EvmT6TAplTtMs4PHGJhQ1F0ggrU=
+github.com/thedevminertv/minimsg v0.0.0-20241021150259-9cccb5265534 h1:I5PhutZhmiDlEs4ZXfs/1DK16x0LFX3d36TzOxbVFmg=
+github.com/thedevminertv/minimsg v0.0.0-20241021150259-9cccb5265534/go.mod h1:CzLnF/HMdYpU/H20EvmT6TAplTtMs4PHGJhQ1F0ggrU=
+github.com/thedevminertv/minimsg v0.0.0-20241021161340-9c8d34b7c8f9 h1:7i8uyXOqOTsX/2Ie84a7xYm9kui8XIDDk8HAAiKszcM=
+github.com/thedevminertv/minimsg v0.0.0-20241021161340-9c8d34b7c8f9/go.mod h1:CzLnF/HMdYpU/H20EvmT6TAplTtMs4PHGJhQ1F0ggrU=
 github.com/urfave/cli/v2 v2.27.1 h1:8xSQ6szndafKVRmfyeUMxkNUJQMjL1F2zmsZ+qHpfho=
 github.com/urfave/cli/v2 v2.27.1/go.mod h1:8qnjx1vcq5s2/wpsqoZFndg2CE5tNFyrTvS6SinrnYQ=
 github.com/urfave/cli/v2 v2.27.2 h1:6e0H+AkS+zDckwPCUrZkKX38mRaau4nL2uipkJpbkcI=

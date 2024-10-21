@@ -15,7 +15,7 @@ import (
 	"strings"
 )
 
-// Parse takes a string as input and returns a `c.Text` object. It splits the input string by "<",
+// Parse takes a string as input and returns a c.Text object. It splits the input string by "<",
 // then further splits each substring by ">". It modifies the style based on the key (the part before ">")
 // and appends a new text component with the modified style and content (the part after ">").
 func Parse(mini string) *c.Text {
@@ -23,26 +23,33 @@ func Parse(mini string) *c.Text {
 	styles = append(styles, c.Style{Color: color.White})
 
 	var components []c.Component
-
 	for _, s := range strings.Split(mini, "<") {
+		fmt.Println(s)
 		if s == "" {
 			continue
 		}
 
-		split := strings.Split(s, ">")
+		split := strings.SplitN(s, ">", 2)
 
 		key := split[0]
 		if strings.HasPrefix(key, "/") {
+			// Handle closing tags like </bold>
 			styles = styles[:len(styles)-1]
 		} else {
+			// Push a new style onto the stack (copy the current style)
 			newStyle := styles[len(styles)-1]
-
 			styles = append(styles, newStyle)
 		}
 
-		newText := modify(key, split[1], &styles[len(styles)-1])
-		components = append(components, newText)
-
+		// Only proceed if there's actual content after ">"
+		if len(split) > 1 {
+			content := split[1]
+			// Preserve spaces and newlines, no trimming here
+			newText := modify(key, content, &styles[len(styles)-1])
+			if newText != nil {
+				components = append(components, newText)
+			}
+		}
 	}
 
 	return &c.Text{
@@ -50,12 +57,15 @@ func Parse(mini string) *c.Text {
 	}
 }
 
-// modify takes a key, content, and style as input and returns a `c.Text` object. It modifies the style
+// modify takes a key, content, and style as input and returns a c.Text object. It modifies the style
 // based on the key and returns a new text component with the modified style and content.
 func modify(key string, content string, style *c.Style) *c.Text {
 	newText := &c.Text{}
 
 	switch {
+	case strings.HasPrefix(key, "/"): // Ignore closing tags like </bold>
+		return nil
+
 	case strings.HasPrefix(key, "#"): // <#ff00ff>
 		parsed, err := ParseColor(key)
 		if err != nil {
@@ -65,6 +75,7 @@ func modify(key string, content string, style *c.Style) *c.Text {
 		style.Color = parsed
 		newText.Content = content
 		newText.S = *style
+
 	case strings.HasPrefix(key, "color"): // <color:light_purple>
 		colorName := strings.Split(key, ":")[1]
 		parsed, err := ParseColor(colorName)
@@ -78,6 +89,26 @@ func modify(key string, content string, style *c.Style) *c.Text {
 
 	case key == "bold": // <bold>
 		style.Bold = c.True
+		newText.Content = content
+		newText.S = *style
+
+	case key == "underline": // <underline>
+		style.Underlined = c.True
+		newText.Content = content
+		newText.S = *style
+
+	case key == "italic": // <italic>
+		style.Italic = c.True
+		newText.Content = content
+		newText.S = *style
+
+	case key == "strikethrough" || key == "st": // <strikethrough> or <st>
+		style.Strikethrough = c.True
+		newText.Content = content
+		newText.S = *style
+
+	case key == "obfuscated": // <obfuscated>
+		style.Obfuscated = c.True
 		newText.Content = content
 		newText.S = *style
 
@@ -97,12 +128,22 @@ func modify(key string, content string, style *c.Style) *c.Text {
 		}
 
 		newText = Gradient(content, *style, colors...)
+
+	default:
+		parsed, err := ParseColor(key)
+		if err != nil {
+			fmt.Println(err)
+			return nil
+		}
+		style.Color = parsed
+		newText.Content = content
+		newText.S = *style
 	}
 
 	return newText
 }
 
-// ParseColor takes a string as input and returns a `color.Color` object. It checks if the input string
+// ParseColor takes a string as input and returns a color.Color object. It checks if the input string
 // starts with "#". If it does, it tries to parse it as a hex color. If it doesn't, it tries to find a
 // named color that matches the input string.
 func ParseColor(name string) (color.Color, error) {
@@ -117,8 +158,7 @@ func ParseColor(name string) (color.Color, error) {
 	}
 }
 
-// FromName takes a string as input and returns a `color.Color` object.
-// It iterates over the named colors and returns the one that matches the input string.
+// FromName takes a string as input and returns a color.Color object.
 func FromName(name string) (color.Color, error) {
 	col, ok := color.Names[name]
 	if ok {
@@ -132,12 +172,12 @@ func FromName(name string) (color.Color, error) {
 	return nil, fmt.Errorf("unknown color name: %s", name)
 }
 
-// Gradient takes a string, a style, and a variable number of colors as input and returns a `c.Text` object.
+// Gradient takes a string, a style, and a variable number of colors as input and returns a c.Text object.
 // It creates a gradient effect by interpolating between the input colors based on their position in the input string.
 func Gradient(content string, style c.Style, colors ...color.RGB) *c.Text {
 	var component []c.Component
 	for id, i := range strings.Split(content, "") {
-		t := float64(id) / float64(len(content))
+		t := float64(id) / float64(len(content)-1)
 		hex, _ := color.Hex(LerpColor(t, colors...).Hex())
 
 		style.Color = hex
@@ -152,7 +192,7 @@ func Gradient(content string, style c.Style, colors ...color.RGB) *c.Text {
 	}
 }
 
-// LerpColor takes a float and a variable number of colors as input and returns a `color.Color` object.
+// LerpColor takes a float and a variable number of colors as input and returns a color.Color object.
 // It interpolates between the input colors based on the input float.
 func LerpColor(t float64, colors ...color.RGB) color.Color {
 	t = math.Min(t, 1)

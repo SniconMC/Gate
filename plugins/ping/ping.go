@@ -2,15 +2,13 @@ package ping
 
 import (
 	"context"
-	"fmt"
 	"github.com/go-logr/logr"
 	. "github.com/minekube/gate-plugin-template/util"
-	"github.com/minekube/gate-plugin-template/util/mini"
 	"github.com/robinbraemer/event"
-	"go.minekube.com/common/minecraft/color"
-	c "go.minekube.com/common/minecraft/component"
-	"go.minekube.com/gate/pkg/edition/java/proto/version"
+	"github.com/thedevminertv/minimsg"
 	"go.minekube.com/gate/pkg/edition/java/proxy"
+	"golang.org/x/exp/rand"
+	"time"
 )
 
 // Plugin is a ping plugin that handles ping events.
@@ -26,22 +24,33 @@ var Plugin = proxy.Plugin{
 	},
 }
 
+// Randomly selects a string from the provided list
+func randomRow() string {
+	rows := []string{
+		"<#818181>\nMade with </#818181><gradient:#ff6c2f:#ff76b6>Minestom</gradient>",
+		"<#818181>\nCheck out <underline>mc.emortal.dev</underline>!</#818181>",
+		"<#818181>\nToo many late nights were spent on this.</#818181>",
+		"<#818181>\nTrans rights are human rights.</#818181>",
+		"<#818181>\nOf Swedish origin!</#818181>",
+	}
+	rand.Seed(uint64(time.Now().UnixNano()))
+	return rows[rand.Intn(len(rows))]
+}
+
 func onPing() func(*proxy.PingEvent) {
-	line2 := mini.Gradient(
-		"Join, test and extend your Gate proxy!",
-		c.Style{Bold: c.True},
-		*color.Yellow.RGB, *color.Gold.RGB, *color.Red.RGB,
-	)
+	// Static first row
+	line1 := minimsg.Parse("<bold>\u200C</bold><gray>                    → </gray> " +
+		"<bold><gradient:#ffff1c:gold>play.znopp.pw</gradient></bold>" +
+		"<gray> ←           </gray><bold>\u200C</bold><dark_gray>⏵ v0.1 ⏴</dark_gray>")
 
 	return func(e *proxy.PingEvent) {
-		clientVersion := version.Protocol(e.Connection().Protocol())
-		line1 := mini.Gradient(
-			fmt.Sprintf("Hey %s user!\n", clientVersion),
-			c.Style{},
-			*color.White.RGB, *color.LightPurple.RGB,
-		)
+		// Randomly selected second row
+		randomLine := randomRow()
+
+		line2 := minimsg.Parse(randomLine)
 
 		p := e.Ping()
+		// Concatenate the two lines as the description
 		p.Description = Join(line1, line2)
 		p.Players.Max = p.Players.Online + 1
 	}

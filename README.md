@@ -1,120 +1,59 @@
-<a name="readme-top"></a>
+[![Logo](.web/docs/public/og-image.png)](https://gate.minekube.com)
 
-<!--
-*** Thanks for checking out the Gate Plugin Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
+# The extensible Minecraft Proxy
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![License][license-shield]][license-url]
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/minekube/gate?sort=semver)](https://github.com/minekube/gate/releases)
+[![Doc](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go)](https://pkg.go.dev/go.minekube.com/gate)
+[![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/minekube/gate?logo=go)](https://golang.org/doc/devel/release.html)
+[![Go Report Card](https://goreportcard.com/badge/go.minekube.com/gate)](https://goreportcard.com/report/go.minekube.com/gate)
+[![test](https://github.com/minekube/gate/workflows/ci/badge.svg)](https://github.com/minekube/gate/actions)
+[![Discord](https://img.shields.io/discord/633708750032863232?logo=discord)](https://discord.gg/6vMDqWE)
 
-<br />
-<div align="center">
-  <a href="https://github.com/minekube/gate-plugin-template">
-    <img src="https://raw.githubusercontent.com/minekube/gate-plugin-template/main/assets/hero.png" alt="Logo" width="128" height="128">
-  </a>
+**Gate is an extensible, high performant & paralleled
+Minecraft proxy** server with scalability, flexibility &
+excellent server version support -
+_written in Go and ready for the cloud!_
 
-<h3 align="center">Gate Starter Plugin Template</h3>
+## [Website & Documentation](https://gate.minekube.com)
 
-  <p align="center">
-    An awesome template for creating your Minecraft proxy powered by Minekube Gate!
-    <br />
-    <br />
-    <a href="https://gate.minekube.com/developers/"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://minekube.com/discord">Discord</a>
-    ·
-    <a href="https://github.com/minekube/gate/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/minekube/gate/issues">Request Feature</a>
-  </p>
-</div>
+**There is a lot to discover on Gate's website.**
+Please refer to the website for the [documentation](https://gate.minekube.com),
+guides and any more information needed!
 
-## About The Project
+## Quick Start
 
-[![Product Name Screen Shot][product-screenshot]](https://gate.minekube.com)
+Follow our [quick start guide](https://gate.minekube.com/guide/quick-start/) on creating a simple Minecraft network!
 
-This template repository bootstraps your [Minekube Gate](https://github.com/minekube/gate) project, a customizable
-Minecraft proxy written in Go.
+```shell
+go run go.minekube.com/gate@latest
+```
 
-## What's Included?
+[![Server list](.web/docs/images/server-list.png)](https://gate.minekube.com)
 
-- `gate.go`: The main entry point of the application.
-- `plugins`: The directory for your custom plugins.
-- `config.yml`: A minimal Gate configuration file.
-- `Dockerfile`: A Dockerfile for building a Docker image.
-- `.github/workflows`: GitHub Action for testing, linting, releasing on tags and publishing Docker images to ghcr.io.
-- `Makefile`: Contains commands for testing and linting.
-- `renovate.json`: Configuration file for Renovate automatic dependency updates.
+## Gate Lite Mode
 
-<details>
-<summary><strong>Prerequisites</strong></summary>
+Gate has a Lite Mode which is a lightweight version of Gate that can expose
+multiple Minecraft servers through a single port and IP address and reverse proxy
+players to backend servers based on the hostname/subdomain they join with.
 
-## Prerequisites
+See the [Lite Mode](https://gate.minekube.com/guide/lite/) guide for more information.
 
-- [Go](https://golang.org/doc/install) - The Go Programming Language
-- [Git](https://git-scm.com/downloads) - Distributed Version Control System
-- [GoLand](https://www.jetbrains.com/go/) / [VSCode](https://code.visualstudio.com/) - Gophers' favorite IDEs
+```mermaid
+graph LR
+    A[Player Alice] -->|Join example.com| C(Gate Lite)
+    B[Player Bob] -->|Join my.example.com| C(Gate Lite)
+    C -->|10.0.0.1| D[Backend A]
+    C -->|10.0.0.2| E[Backend B]
+    C -->|10.0.0.3| F[Another Proxy]
+    
+    linkStyle 0 stroke:orange
+    linkStyle 1 stroke:purple
+    linkStyle 2 stroke:purple
+    linkStyle 3 stroke:orange
+```
 
-</details>
+## Developers Starter Template
 
-## Getting Started
+The starter template is designed to help you get started with your own Gate powered project.
+Fork it! 🚀 - [minekube/gate-plugin-template](https://github.com/minekube/gate-plugin-template)
 
-1. Fork this repository on GitHub.
-2. Clone forked repository (`git clone <your-forked-repo-url>`)
-3. Open project in your favorite Go IDE.
-4. Run the proxy: `go run .`
-5. Start customizing Gate to your needs!
-
-## Usage
-
-To create a new Gate plugin, follow these steps:
-
-1. Create and write your plugin code in a new `plugins/xyz/xyz.go` file.
-2. Add your exported plugin to the `proxy.Plugins` slice in `gate.go`.
-3. Build and run Gate with: `go run .`
-
-Use the `-d` flag to run Gate in debug mode if you encounter issues. (`go run . -d`)
-
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any
-contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feat/AmazingFeature`)
-5. Open a Pull Request on GitHub
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-[contributors-shield]: https://img.shields.io/github/contributors/minekube/gate.svg?style=for-the-badge
-
-[contributors-url]: https://github.com/minekube/gate/graphs/contributors
-
-[forks-shield]: https://img.shields.io/github/forks/minekube/gate-plugin-template.svg?style=for-the-badge
-
-[forks-url]: https://github.com/minekube/gate-plugin-template/network/members
-
-[stars-shield]: https://img.shields.io/github/stars/minekube/gate.svg?style=for-the-badge
-
-[stars-url]: https://github.com/minekube/gate-plugin-template/stargazers
-
-[issues-shield]: https://img.shields.io/github/issues/minekube/gate.svg?style=for-the-badge
-
-[issues-url]: https://github.com/minekube/gate-plugin-template/issues
-
-[license-shield]: https://img.shields.io/github/license/minekube/gate.svg?style=for-the-badge
-
-[license-url]: https://github.com/minekube/gate/blob/master/LICENSE
-
-[product-screenshot]: https://github.com/minekube/gate/raw/master/.web/docs/public/og-image.png

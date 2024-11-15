@@ -1,21 +1,13 @@
-# This is a simplified config where the rest of the
-# settings are omitted and will be set by default.
-# See config.yml for the full configuration options.
 config:
-  bind: 0.0.0.0:25565
+  bind: 0.0.0.0:25568
   onlineMode: true
   servers:
-    compass: 127.0.0.1:25566
-    camouflage: 127.0.0.1:25567
   try:
-    - compass
-    - camouflage
   forwarding:
     mode: velocity
     velocitySecret: balle123
   forceKeyAuthentication: false
   shutdownReason: |
-    §cYou're out of luck!
+    §cYou're out of luc!
     <green>asdf</green>
-  status:
-    favicon: assets/znopp.png
+  bungeePluginChannelEnabled: true

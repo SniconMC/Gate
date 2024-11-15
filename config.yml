@@ -1,13 +1,8 @@
 config:
-  bind: 0.0.0.0:25568
+  bind: 0.0.0.0:25565
   onlineMode: true
-  servers:
-  try:
-  forwarding:
-    mode: velocity
-    velocitySecret: balle123
-  forceKeyAuthentication: false
-  shutdownReason: |
-    §cYou're out of luc!
-    <green>asdf</green>
-  bungeePluginChannelEnabled: true
+  lite:
+
+    enabled: true
+
+    routes:

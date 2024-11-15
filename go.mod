@@ -44,7 +44,6 @@ require (
 	buf.build/gen/go/minekube/connect/protocolbuffers/go v1.34.2-20240220124425-904ce30425c9.2 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.5 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
-	github.com/dilllxd/dynamicserverapi v0.0.0-20241111225608-2a9928f28ba4 // indirect
 	github.com/emirpasic/gods v1.18.1 // indirect
 	github.com/francoispqt/gojay v1.2.13 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect

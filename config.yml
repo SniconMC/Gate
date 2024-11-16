@@ -11,3 +11,4 @@ config:
     §cYou're out of luc!
     <green>asdf</green>
   bungeePluginChannelEnabled: true
+  acceptTransfers: true

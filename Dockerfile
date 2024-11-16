@@ -11,7 +11,6 @@ RUN go mod download
 # Copy the go source
 COPY cmd ./cmd
 COPY pkg ./pkg
-COPY plugins ./plugins
 COPY gate.go ./
 
 # Automatically provided by the buildkit
@@ -26,7 +25,6 @@ FROM --platform=$BUILDPLATFORM debian:11 AS app
 COPY --from=build /workspace/gate /gate
 # Add the Gate configuration file
 COPY config.yml /config.yml
-COPY servers.json /servers.json
 RUN apt-get update && apt-get install -y bash && apt-get install -y ca-certificates && update-ca-certificates
 
 CMD ["/gate"]

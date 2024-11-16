@@ -1,8 +1,18 @@
 config:
   bind: 0.0.0.0:25565
-  onlineMode: true
   lite:
 
     enabled: true
 
     routes:
+      - host: localhost
+        # The backend server to connect to if matched.
+        backend: localhost:25566
+        # The optional fallback status response when all backends of this route are offline.
+        fallback:
+          motd: |
+            §cLocalhost server is offline.
+            §eCheck back later!
+          version:
+            name: '§cTry again later!'
+            protocol: -1

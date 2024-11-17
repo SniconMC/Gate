@@ -11,6 +11,8 @@ RUN go mod download
 # Copy the go source
 COPY cmd ./cmd
 COPY pkg ./pkg
+COPY redisdb ./redisdb
+COPY server ./server
 COPY plugins ./plugins
 COPY gate.go ./
 
